@@ -11,7 +11,9 @@ services:
     build: ./core/audio
     privileged: true
     labels:
-      io.balena.features.dbus: 1
+      io.balena.features.dbus: "1"
+    environment:
+      AUDIO_OUTPUT: "RPI_HDMI0"
     ports:
       - 4317:4317
 
@@ -20,21 +22,36 @@ services:
       context: .
       dockerfile: ./core/sound-supervisor/Dockerfile.template
     network_mode: host
+    environment:
+      SOUND_SUPERVISOR_DEBUG: true
     labels:
       io.balena.features.balena-api: "1"
-      io.balena.features.supervisor-api: 1
+      io.balena.features.supervisor-api: "1"
 
-  multiroom-server:
-    build: ./core/multiroom/server
-    restart: on-failure
-    ports:
-      - 1704:1704
-      - 1705:1705
-      - 1780:1780
+  hdmi-cec:
+    build:
+      context: .
+      dockerfile: ./core/hdmi-cec/Dockerfile.template
+    network_mode: host
+    environment:
+      SOUND_SUPERVISOR_DEBUG: true
+    devices:
+      - /dev/vchiq:/dev/vchiq
+    labels:
+      io.balena.features.balena-api: "1"
+      io.balena.features.supervisor-api: "1"
 
-  multiroom-client:
-    build: ./core/multiroom/client
-    restart: on-failure
+#  multiroom-server:
+#    build: ./core/multiroom/server
+#    restart: on-failure
+#    ports:
+#      - 1704:1704
+#      - 1705:1705
+#      - 1780:1780
+
+#  multiroom-client:
+#    build: ./core/multiroom/client
+#    restart: on-failure
 
   # Plugins
   # -- Additional plugins can be added.
@@ -45,30 +62,32 @@ services:
     network_mode: host
     cap_add:
       - NET_ADMIN
+    environment:
+      BLUETOOTH_DEVICE_NAME: "living-room-music"
     labels:
-      io.balena.features.dbus: 1
+      io.balena.features.dbus: "1"
 
-  airplay:
-    build: ./plugins/airplay
-    restart: on-failure
-    network_mode: host
-    privileged: true
-    labels:
-      io.balena.features.dbus: 1
+#  airplay:
+#    build: ./plugins/airplay
+#    restart: on-failure
+#    network_mode: host
+#    privileged: true
+#    labels:
+#      io.balena.features.dbus: "1"
 
-  spotify:
-    build: ./plugins/spotify
-    restart: on-failure
-    privileged: true
-    network_mode: host
-    volumes:
-      - spotifycache:/var/cache/raspotify
+#  spotify:
+#    build: ./plugins/spotify
+#    restart: on-failure
+#    privileged: true
+#    network_mode: host
+#    volumes:
+#      - spotifycache:/var/cache/raspotify
 
   # https://github.com/balenablocks/hostname
-  hostname:
-    build: ./core/hostname
-    restart: no
-    labels:
-      io.balena.features.supervisor-api: 1
-    environment:
-      SET_HOSTNAME: balena
+#  hostname:
+#    build: ./core/hostname
+#    restart: no
+#    labels:
+#      io.balena.features.supervisor-api: "1"
+#    environment:
+#      SET_HOSTNAME: balena
