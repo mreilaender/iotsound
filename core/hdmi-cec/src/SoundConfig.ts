@@ -4,14 +4,12 @@ import BalenaAudio from 'balena-audio'
 import {CecMonitor, Remote} from "hdmi-cec";
 
 interface DeviceConfig {
-  ip: string,
-  type: string
+  ip: string
 }
 
 export default class SoundConfig {
   public device: DeviceConfig = {
-    ip: getIPAddress() ?? 'localhost',
-    type: constants.balenaDeviceType
+    ip: getIPAddress() ?? 'localhost'
   }
   private audioBlock: BalenaAudio
   private cecRemote: Remote
