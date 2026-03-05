@@ -15,3 +15,19 @@ export function sendCecActiveSource(): Promise<void> {
     })
   })
 }
+
+export function sendCecInactiveSource(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const command = `echo "is" | cec-client -s -d 1`
+
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        console.error('CEC error:', error)
+        reject(error)
+      } else {
+        console.log('CEC sent:', stdout)
+        resolve()
+      }
+    })
+  })
+}
