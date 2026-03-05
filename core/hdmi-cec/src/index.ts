@@ -45,7 +45,7 @@ audioBlock.on('play', async (sink: any) => {
 })
 
 audioBlock.on('stop', async (sink: any) => {
-	console.log('[event] Audio has stopped playing, sending CEC inactive source')
+  console.log('[event] Audio has stopped playing, sending CEC inactive source')
   console.log('sink name:' + sink.name)
 
   config.getCecMonitor().send("is")
