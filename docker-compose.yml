@@ -33,8 +33,6 @@ services:
       context: .
       dockerfile: ./core/hdmi-cec/Dockerfile.template
     network_mode: host
-    environment:
-      SOUND_SUPERVISOR_DEBUG: true
     devices:
       - /dev/vchiq:/dev/vchiq
     labels:
