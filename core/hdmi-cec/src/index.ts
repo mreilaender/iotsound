@@ -37,8 +37,14 @@ audioBlock.on('stop', async (sink: any) => {
   config.getCecMonitor().send("is")
 })
 
-audioBlock.on('play', async (sink: any) => {
-  console.log(`[event] Sound started playing, sending CEC active source`)
+audioBlock.on('connect', async (sink: any) => {
+  console.log(`[event] Device connected, sending CEC active source`)
 
   config.getCecMonitor().send("as")
+})
+
+audioBlock.on('disconnect', async (sink: any) => {
+  console.log(`[event] Device, sending CEC inactive source`)
+
+  config.getCecMonitor().send("is")
 })
