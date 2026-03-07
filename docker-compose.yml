@@ -56,8 +56,6 @@ services:
     network_mode: host
     cap_add:
       - NET_ADMIN
-    environment:
-      BLUETOOTH_DEVICE_NAME: "living-room-music"
     labels:
       io.balena.features.dbus: 1
 
@@ -82,6 +80,6 @@ services:
     build: ./core/hostname
     restart: no
     labels:
-      io.balena.features.supervisor-api: "1"
+      io.balena.features.supervisor-api: 1
     environment:
       SET_HOSTNAME: balena
