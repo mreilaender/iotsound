@@ -1,5 +1,4 @@
 import { getIPAddress } from './utils'
-import { constants } from './constants'
 import BalenaAudio from 'balena-audio'
 import {CecMonitor, Remote} from "hdmi-cec";
 
