@@ -11,19 +11,10 @@ export default class SoundConfig {
     ip: getIPAddress() ?? 'localhost'
   }
   private audioBlock: BalenaAudio
-  private cecRemote: Remote
   private cecMonitor: CecMonitor
 
   bindAudioBlock(audioBlock: BalenaAudio) {
     this.audioBlock = audioBlock
-  }
-
-  bindRemote(remote: Remote) {
-    this.cecRemote = remote
-  }
-
-  getCecRemote(): Remote {
-    return this.cecRemote
   }
 
   bindCecMonitor(cecMonitor: CecMonitor) {
